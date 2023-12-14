@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+  <title>Frontend Mentor | Age calculator app</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: hsl(0, 0%, 86%);
+    }
+
+    .container {
+      min-width: 520px;
+      min-height: 400px;
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      justify-content: space-around;
+      border-bottom-right-radius: 100px;
+      position: relative;
+      padding: 5px;
+      padding-left: 20px;
+      padding-top: 15px;
+
+    }
+
+    .container .subone {
+      display: flex;
+      position: relative;
+      border-bottom: 1px solid black;
+    }
+
+    .subone label {
+      position: absolute;
+      top: -10px;
+      margin-left: 20px;
+      font-size: 16px;
+      font-weight: 700;
+      color: hsl(0, 0%, 86%);
+    }
+
+    .subone input {
+      margin: 20px;
+      padding: 10px 10px;
+      width: 100px;
+      font-size: 18px;
+      color: hsl(0, 1%, 44%);
+      font-weight: 700;
+      outline: none;
+      border-radius: 5px;
+      margin-bottom: 30px;
+    }
+
+    .container .btn {
+      width: 60px;
+      height: 60px;
+      position: absolute;
+      background-color: hsl(259, 100%, 65%);
+      right: 3.8%;
+      top: 24%;
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .btn svg {
+      width: 40px;
+      margin: 0 auto;
+      padding: 2px;
+    }
+
+    .container .result p {
+      font-size: 48px;
+      padding: 5px 60px;
+      font-weight: 700;
+    }
+
+    #cc {
+      color: hsl(259, 100%, 65%);
+      margin-right: 10px;
+      font-size: 60px;
+    }
+
+    #kk {
+      color: hsl(259, 100%, 65%);
+      margin-right: 10px;
+      font-size: 60px;
+    }
+
+    #yy {
+      color: hsl(259, 100%, 65%);
+      margin-right: 10px;
+      font-size: 60px;
+    }
+
+    #yes {
+      position: absolute;
+      bottom: 5px;
+      left: 25px;
+      font-size: 16px;
+      color: hsl(0, 100%, 67%);
+    }
+    #born{
+      position: absolute;
+      bottom: 5px;
+      left: 37%;
+      font-size: 16px;
+      color: hsl(0, 100%, 67%);
+    }
+    #corn{
+      position: absolute;
+      bottom: 5px;
+      right: 20px;
+      font-size: 16px;
+      color: hsl(0, 100%, 67%);
+    }
+    @media (max-width:375px) {
+      .container{
+        min-width: 400px;
+        border-bottom-right-radius: 0;
+      }
+      .subone{
+        border-bottom: none;
+        padding-bottom: 10px;
+      }
+      .subone input{
+        width: 80px;
+      }
+      #bn{
+        left: 45%;
+        top: 30%;
+        width: 50px;
+        height: 50px;
+        padding: 5px;
+    }
+    #cc{
+      font-size: 48px;
+    }
+    #kk{
+      font-size: 48px;
+    }
+    #yy{
+      font-size: 48px;
+    }
+    #btn::before{
+      content: '';
+      width: 100%;
+      height: 2px;
+      position: relative;
+      top:30%;
+    left: 0;
+    background-color:blue;
+  }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="subone">
+      <div>
+        <label for="input1">Day</label>
+        <input type="text" id="input1" placeholder="DD" maxlength="2">
+        <span id="yes" class="bb"></span>
+      </div>
+      <div>
+        <label for="input2">Month</label>
+        <input type="text" id="input2" placeholder="MM" maxlength="2">
+        <span class="bb" id="born"></span>
+      </div>
+      <div>
+        <label for="input3">Year</label>
+        <input type="text" id="input3" placeholder="YYYY" maxlength="4">
+        <span class="bb" id="corn"></span>
+      </div>
+    </div>
+    <div class="btn" id="bn">
+      <img src="./age-calculator-app-main/assets/images/icon-arrow.svg" alt="">
+    </div>
+    <div class="result">
+      <p><span id="cc">--</span>years</p>
+      <p><span id="kk">--</span>months</p>
+      <p><span id="yy">--</span>days</p>
+    </div>
+  </div>
+</body>
+<script>
+  let btn = document.getElementById("bn")
+  let dd = document.getElementById("input1")
+  let mm = document.getElementById("input2")
+  let yy = document.getElementById("input3")
+  let years = document.getElementById("cc")
+  let months = document.getElementById("kk")
+  let days = document.getElementById("yy")
+  let own=new Date()
+  let dayvalue
+  let monthvalue
+  let yearvalue
+  dd.addEventListener("input",()=>{
+    if(dd.value){
+      if(dd.value%1===0){
+        if(dd.value<=31 && dd.value>0){
+          dayvalue=dd.value
+          dd.style.borderColor="grey"
+          document.getElementById("yes").innerText=""
+          dd.style.color=""
+        }
+        if(dd.value>31 || dd.value<0){
+          dd.style.borderColor="red"
+          dd.style.color="red"
+          document.getElementById("yes").innerText="enter valid date"
+        }
+      }
+    }
+  })
+  mm.addEventListener("input",()=>{
+    if(mm.value){
+      if(mm.value%1===0){
+        if(mm.value<=12 && mm.value>0){
+          monthvalue=mm.value
+          mm.style.borderColor="grey"
+          document.getElementById("born").innerText=""
+          mm.style.color=""
+        }
+        if(mm.value>12 || mm.value<0){
+          mm.style.borderColor="red"
+          mm.style.color="red"
+          document.getElementById("born").innerText="enter valid month"
+        }
+      }
+    }
+  })
+  yy.addEventListener("input",()=>{
+    if(yy.value){
+      if(yy.value%1===0){
+        if(yy.value<=own.getUTCFullYear()){
+          yearvalue=yy.value
+          yy.style.borderColor="grey"
+          document.getElementById("corn").innerText=""
+          yy.style.color=""
+        }
+        if(yy.value>own.getUTCFullYear()){
+          yy.style.borderColor="red"
+          yy.style.color="red"
+          document.getElementById("corn").innerText="enter past year"
+        }
+        if(yy.value.length<4){
+          yy.style.borderColor="red"
+          yy.style.color="red"
+          document.getElementById("corn").innerText="enter valid year"
+        }
+      }
+    }
+  })
+  btn.addEventListener("click",()=>{
+    if(yy.value>0){
+      years.innerText=own.getUTCFullYear()-yearvalue
+    }
+    if(mm.value){
+      months.innerText=Math.abs(own.getUTCMonth()-monthvalue)
+    }
+    if(dd.value){
+      days.innerText=Math.abs(own.getUTCDate()-dayvalue)
+
+    }
+    else{
+      alert("enter the details")
+    }
+  })
+</script>
+
+</html>
